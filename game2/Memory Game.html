@@ -228,7 +228,15 @@
             document.gra[w].src = d[compare[w]];//翻開這張牌
             counter++;
             document.getElementById("counter").innerHTML = (72 - counter);
-            
+            if (counter == 72&&p<17) {
+                $("#dialogL").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "shake",
+                    width: "500px",
+                    modal: true
+                });
+            }
 
             if (second)//已經翻起兩張
             {
@@ -263,15 +271,7 @@
                 cardfirst = w;//將第一張牌的位置記起來
             }
         }
-        if (counter == 72&&p!=18) {
-                $("#dialogL").dialog({
-                    dialogClass: "dlg-no-close",
-                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
-                    show: "shake",
-                    width: "500px",
-                    modal: true
-                });
-            }
+        
         function k2(w, cardfirst) {
             document.gra[w].src = "blank.png";
             document.gra[cardfirst].src = "blank.png";
