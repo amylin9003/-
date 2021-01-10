@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>速度激情</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <style type="text/CSS">
+        @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
+        div {
+            font-size: 70px;
+            font-family: Consolas;
+            margin: 5px;
+        }
+
+        span.number {
+            font-size: 80px;
+            color: dodgerblue;
+        }
+
+        span.number1 {
+            font-size: 95px;
+            color: dimgray;
+        }
+        .dlg-no-close .ui-dialog-titlebar-close {
+            display: none;
+        }
+
+        .divcss {
+            /*width: 500px;*/
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 120px;
+            height: 60px;
+            display: inline-block;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            color: blue;
+            font-size: 18px;
+            line-height: 60px;
+            background-color: orange;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+
+        .btn3:hover {
+            background-color: navajowhite;
+            transition: all 0.5s;
+            color: rebeccapurple;
+            font-weight: bolder;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+
+        .ui-dialog .ui-dialog-titlebar {
+            padding: .2em .4em;
+        }
+
+        .ui-dialog-title {
+            font-size: 38px;
+            margin: 5px;
+            font-family: fantasy;
+            color: blue;
+            text-shadow: -4px 4px 6px khaki; /* add shadow */
+            -webkit-text-stroke: 1px lightgray; /* vendor prefix */
+            /* increasing the font size */
+        }
+    </style>
+</head>
+
+<body>
+    <input style="position:absolute;right:0px;bottom:0px;" id="button" type="button" value="通關鍵" />
+    <span style="position:absolute;right:35px;bottom:0px;"id="ans"></span>
+    <img style="position: absolute;
+                 top: 20px;
+                 left: 900px;
+                 z-index: 0; width:320px;" id="p" src="">
+    <div style="font-family: tahoma, geneva, sans-serif;position:absolute;top:20px;left:100px;"><span id="x"></span><i style="color:red"></i></div>
+    <div style="position:absolute;top:150px;left:100px;font-size: 80px;border-style: solid;border-color: black;">
+        <span class="number1" id="0"></span><span class="number" id="00"></span><span class="number1" id="1"></span><span class="number" id="11"></span><span class="number1" id="2"></span><span class="number" id="22"></span><span class="number1" id="3"></span><span class="number" id="33"></span><span class="number1" id="4"></span><span class="number" id="44"></span><span class="number1" id="5"></span><span class="number" id="55"></span><span class="number1" id="6"></span><span class="number1" id="66"></span><span style="color:mediumvioletred;font-size:105px" id="g"></span>
+    </div>
+    <div style="position:absolute;top:300px;left:100px;font-size:larger">
+        <input style="display:none" type="number" id="n">
+        <input style="display:none" type="button" value="確定答案" id="Button">
+    </div>
+    <div id="dialogStart" title="遊戲說明" style="display: none; font-size: 32px;">
+        <p style="font-size:18px;text-align:center;">
+            有10秒鐘的時間算出此題計算<br />
+            運算規則為從後方開始往前運算取到整數<br />遇到"/"或"%"且後項為0變為1，如:6/4%5=6、3*7/3=2
+
+            <br /><br />按開始按鈕開始遊戲
+        </p>
+        <div class="divcss">
+            <button id="btnStartClose" class="btn  btn3">開始</button>
+        </div>
+    </div>
+    <div id="dialogWin" title="恭喜成功!" style="display: none; font-size: 32px;text-align:center;">
+        <img style="width:50%;
+             height:40%;" id="img" src="../p/Hero0.png" alt="blank image">
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnWinClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+    <div id="dialogL" title="挑戰失敗!" style="display: none; font-size: 32px;text-align:center;">
+        <img style="width:50%;
+             height:40%;" id="img1" src="../p/monster0.png" alt="blank image">
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnLClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+    <script>
+        var aI = document.getElementsByTagName("i");
+        var sum = 0;
+        var zzz = [];
+        var zz = [];
+        var time = new Date();
+        var endTime = time.getTime() + 6000;
+        var o = 0;
+        function no() {
+            //document.write("恭喜獲勝!");
+            clearInterval(q);
+            $("#dialogWin").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "bounce",
+                width: "500px",
+                modal: true
+            });
+        }
+        function t() {
+            for (let i = 0; i < 7; i++) {
+                zz[i] = Math.floor(1 + Math.random() * 8);
+                zzz[i] = Math.floor(Math.random() * 5);
+            }
+            sum = zz[6];
+            document.getElementById('6').innerHTML = zz[6];
+            for (let i = 5; i >= 0; i--) {
+                if (zzz[i] == 0) {
+                    var t = (i).toString();
+                    document.getElementById(t).innerHTML = zz[i];
+                    t = (i).toString() + (i).toString();
+                    document.getElementById(t).innerHTML = "+";
+                    sum = zz[i] + sum;
+                }
+                else if (zzz[i] == 1) {
+                    var t = (i).toString();
+                    document.getElementById(t).innerHTML = zz[i];
+                    t = (i).toString() + (i).toString();
+                    document.getElementById(t).innerHTML = "-";
+                    sum = zz[i] - sum;
+                }
+                else if (zzz[i] == 2) {
+                    var t = (i).toString();
+                    document.getElementById(t).innerHTML = zz[i];
+                    t = (i).toString() + (i).toString();
+                    document.getElementById(t).innerHTML = "*";
+                    sum = zz[i] * sum;
+                }
+                else if (zzz[i] == 3) {
+                    var t = (i).toString();
+                    document.getElementById(t).innerHTML = zz[i];
+                    t = (i).toString() + (i).toString();
+                    document.getElementById(t).innerHTML = "/";
+                    if (sum == 0) sum = 1;
+                    sum = Math.floor(zz[i] / sum);
+                }
+                else if (zzz[i] == 4) {
+                    var t = (i).toString();
+                    document.getElementById(t).innerHTML = zz[i];
+                    t = (i).toString() + (i).toString();
+                    document.getElementById(t).innerHTML = "%";
+                    if (sum == 0) sum = 1;
+                    sum = zz[i] % sum;
+                }
+
+            }
+
+            document.getElementById("ans").innerHTML = sum;
+            document.getElementById("n").setAttribute("style", "display :inital;");
+            document.getElementById("Button").setAttribute("style", "display :inital;");
+            document.getElementById("x").innerHTML = "倒計時: ";
+            document.getElementById("66").innerHTML = "=";
+            document.getElementById("g").innerHTML = "?";
+            document.getElementById("p").setAttribute("src", "bad.png");
+            time = new Date();
+            endTime = time.getTime() + 6000;
+            q = setInterval(tt, 900);
+            time = new Date();
+            endTime = time.getTime() + 10000;
+        }
+        function tt() {
+            var time = new Date();
+            var nowTime = time.getTime();
+            if (endTime < nowTime) {
+
+                clearInterval(q);
+                $("#dialogL").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "shake",
+                    width: "500px",
+                    modal: true
+                });
+            }
+            var offsetTime = (endTime - nowTime) / 1000;
+            var sec = parseInt(offsetTime % 60);
+            aI[0].textContent = sec + "秒";
+        }
+
+        function go() {
+            clearInterval(q);
+            if (sum == document.getElementById("n").value) {
+                $("#dialogWin").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "bounce",
+                    width: "500px",
+                    modal: true
+                });
+            }
+            else {
+            $("#dialogL").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "shake",
+                    width: "500px",
+                    modal: true
+            });
+            }
+        }
+        function start() {
+            t();
+            var button = document.getElementById("Button");
+            button.addEventListener("click", go, false);
+
+        }
+        function gif() {
+            var k = o % 2;
+            document.getElementById("img").setAttribute("src", "../p/Hero" + k + ".png");
+            document.getElementById("img1").setAttribute("src", "../p/monster" + k + ".png");
+            o++;
+        }
+        function ss() {
+            var button = document.getElementById("button");
+            button.addEventListener("click", no, false);
+            $("#dialogStart").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "clip",
+                width: "600px",
+                modal: true
+            });
+            setInterval("gif()",500);
+            var button = document.getElementById("btnStartClose");
+            button.addEventListener("click", start, false);
+           
+        }
+        window.addEventListener("load", ss, false);
+    </script>
+    <script>
+        $(function () {
+            //$("#btnOpen").bind("click", function (ev) {
+            //$("#dialog").dialog({
+            //    dialogClass: "dlg-no-close",
+            //    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+            //    show: "bounce"
+            //});
+            //});
+
+            $("#btnWinClose").bind("click", function (ev) {
+                $("#dialogWin").dialog("close");
+                location.href = "../story/9.html";
+            });
+            $("#btnLClose").bind("click", function (ev) {
+                $("#dialogL").dialog("close");
+                location.href = "../story/88.html";
+            });
+            $("#btnStartClose").bind("click", function (ev) {
+                $("#dialogStart").dialog("close");
+                //start();
+            });
+
+        });
+    </script>
+</body>
+
+</html>

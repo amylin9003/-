@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>抽鬼牌</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        ul {
+            margin: 0;
+        }
+
+        span {
+            font-family: Microsoft YaHei, LiHei Pro, TW-Kai;
+            color: navy;
+            font-size: 120%;
+        }
+
+        .dlg-no-close .ui-dialog-titlebar-close {
+            display: none;
+        }
+
+        .divcss {
+            /*width: 500px;*/
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 120px;
+            height: 60px;
+            display: inline-block;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            color: blue;
+            font-size: 18px;
+            line-height: 60px;
+            background-color: orange;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+
+        .btn3:hover {
+            background-color: navajowhite;
+            transition: all 0.5s;
+            color: rebeccapurple;
+            font-weight: bolder;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+
+        .ui-dialog .ui-dialog-titlebar {
+            padding: .2em .4em;
+        }
+
+        .ui-dialog-title {
+            font-size: 38px;
+            margin: 5px;
+            font-family: fantasy;
+            color: blue;
+            text-shadow: -4px 4px 6px khaki; /* add shadow */
+            -webkit-text-stroke: 1px lightgray; /* vendor prefix */
+            /* increasing the font size */
+        }
+    </style>
+    <script>
+        var a = [], r = 9, rr = 17;
+        var o = 0;
+        function no() {
+            //document.write("恭喜獲勝!");
+            $("#dialogWin").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "bounce",
+                width: "600px",
+                modal: true
+            });
+        }
+        function gogo() {
+            for (let i = 0; i < r; i++) {
+                for (let j = i + 1; j < r; j++) {
+                    if (a[i] % 9 == a[j] % 9 && a[i] != 0) {
+                        a[i] = -1;
+                        a[j] = -1;
+                        break;
+                    }
+                }
+            }
+            for (let i = r; i < rr; i++) {
+                for (let j = i + 1; j < rr; j++) {
+                    if (a[i] % r == a[j] % r && a[i] != 0) {
+                        a[i] = -1;
+                        a[j] = -1;
+                        break;
+                    }
+                }
+            }
+            for (let i = 0; i < r; i++) {
+                if (a[i] == -1) {
+                    for (let j = i + 1; j < r; j++) {
+                        a[j - 1] = a[j];
+                    }
+                    a[r - 1] = -1;
+                    r--;
+                    i--;
+                }
+            }
+            for (let i = 9; i < rr; i++) {
+                if (a[i] == -1) {
+                    for (let j = i + 1; j < rr; j++) {
+                        a[j - 1] = a[j];
+                    }
+                    a[rr - 1] = -1;
+                    rr--;
+                    i--;
+                }
+            }
+            for (let i = 0; i < r; i++) {
+                var t = (i + 1).toString();
+                document.getElementById(t).src = "pic/blank.png ";
+            }
+            for (let i = r; i < 9; i++) {
+                var t = (i + 1).toString();
+                document.getElementById(t).src = "pic/b.png ";
+            }
+            for (let i = 9; i < rr; i++) {
+                var t = (i - 8).toString() + (i - 8).toString();
+                var tt = a[i].toString();
+                document.getElementById(t).src = "pic/" + tt + ".png ";
+            }
+            for (let i = rr; i < 17; i++) {
+                var t = (i - 8).toString() + (i - 8).toString();
+                document.getElementById(t).src = "pic/b.png ";
+            }
+            setTimeout(function () { alert("請抽對方一張牌") }, 100);
+            document.getElementById("table").addEventListener("mouseup", MouseClick, false);
+        }
+        function MouseClick(e) {
+            if (e.target.id <= r) {
+                var p = parseInt(e.target.id);
+                var tt = a[p - 1].toString();
+                document.getElementById(e.target.id).src = "pic/" + tt + ".png ";
+                setTimeout(function () { find(p) }, 2000);
+            }
+        }
+        function find(n) {
+            if (rr == 10 && a[rr - 1] != 0 && a[n - 1] % 9 == a[rr - 1] % 9) {
+                $("#dialogWin").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "bounce",
+                width: "600px",
+                modal: true
+            });
+            }
+            else if (r == 1) {
+                $("#dialogL").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "shake",
+                    width: "500px",
+                    modal: true
+                });
+            }
+            else {
+                var t = (rr - 8).toString() + (rr - 8).toString();
+                var tt = a[n - 1].toString();
+                document.getElementById(t).src = "pic/" + tt + ".png ";
+                a[rr++] = a[n - 1];
+                for (let j = n; j < 9; j++) {
+                    a[j - 1] = a[j];
+                }
+                a[r - 1] = -1;
+                r--;
+                for (let i = n - 1; i < r; i++) {
+                    var t = (i + 1).toString();
+                    document.getElementById(t).src = "pic/blank.png ";
+                }
+                for (let i = r; i < 9; i++) {
+                    var t = (i + 1).toString();
+                    document.getElementById(t).src = "pic/b.png ";
+                }
+                var q;
+                for (let i = 9; i < rr; i++) {
+                    if (a[i] % 9 == a[rr - 1] % 9 && a[i] != 0) {
+                        a[rr--] = -1;
+                        a[i] = -1;
+                        a[rr] = -1;
+                        for (let j = i + 1; j < 17; j++) {
+                            a[j - 1] = a[j];
+                        }
+                        rr -= 1;
+                        for (let j = i; j < rr; j++) {
+                            var t = (j - 8).toString() + (j - 8).toString();
+                            var tt = a[j].toString();
+                            document.getElementById(t).src = "pic/" + tt + ".png ";
+                        }
+                        for (let j = rr; j < 17; j++) {
+                            var t = (j - 8).toString() + (j - 8).toString();
+                            document.getElementById(t).src = "pic/b.png ";
+                        }
+                        setTimeout(function () { alert("恭喜配對成功") }, 100);
+                        break;
+                    }
+                }
+                setTimeout(function () { op() }, 1500);
+
+            }
+        }
+        function op() {
+            var b = Math.floor(10 + Math.random() * (rr - 9));
+            //setTimeout(function () { alert(a[b - 1] % 9) }, 500);
+            if (r == 1 && a[r] != 0 && a[r] != 9 && a[b - 1] == a[r]) {
+                $("#dialogL").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "shake",
+                    width: "500px",
+                    modal: true
+                });
+            }
+            else if (rr == 10) {
+                $("#dialogWin").dialog({
+                            dialogClass: "dlg-no-close",
+                            //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                            show: "bounce",
+                            width: "500px",
+                            modal: true
+                        });
+            }
+            else {
+                for (let i = 0; i < r; i++) {
+                    var bo = 0;
+                    if (a[i] % 9 == a[b - 1] % 9 && a[b - 1] != 0 && a[b - 1] != 9) {
+                        a[i] = -1;
+                        a[b - 1] = -1;
+                        for (let j = i + 1; j < 9; j++) {
+                            a[j - 1] = a[j];
+                        }
+                        for (let j = b; j < 17; j++) {
+                            a[j - 1] = a[j];
+                        }
+                        r--;
+                        rr--;
+                        bo = 1;
+                        var t = (r + 1).toString();
+                        document.getElementById(t).src = "pic/b.png ";
+                        break;
+                    }
+                }
+                if (bo == 0) {
+                    a[r] = a[b - 1];
+                    a[b - 1] = -1;
+                    for (let j = b; j < 17; j++) {
+                        a[j - 1] = a[j];
+                    }
+                    rr--;
+                    var t = (++r).toString();
+                    document.getElementById(t).src = "pic/blank.png ";
+                }
+                for (let j = 9; j < rr; j++) {
+                    var t = (j - 8).toString() + (j - 8).toString();
+                    var tt = a[j].toString();
+                    document.getElementById(t).src = "pic/" + tt + ".png ";
+                }
+                for (let j = rr; j < 17; j++) {
+                    var t = (j - 8).toString() + (j - 8).toString();
+                    document.getElementById(t).src = "pic/b.png ";
+                }
+                for (let i = 0; i < r; i++) {
+                    var b = Math.floor(Math.random() * r);
+                    var temp = a[i];
+                    a[i] = a[b];
+                    a[b] = temp;
+                }
+                setTimeout(function () { alert("換你囉!") }, 500);
+            }
+
+        }
+        function go() {
+            var temp;
+            for (let i = 0; i < 18; i++) {
+                if (i == 9) i++;
+                if (i > 9) a[i - 1] = i;
+                else a[i] = i;
+            }
+            for (let i = 0; i < 17; i++) {
+                var b = Math.floor(Math.random() * 17);
+                temp = a[i];
+                a[i] = a[b];
+                a[b] = temp;
+            }
+            for (let i = 1; i < 9; i++) {
+                var t = (i).toString();
+                var tt = a[i - 1].toString();
+                document.getElementById(t).src = "pic/" + tt + ".png ";
+                var t = (i).toString() + (i).toString();
+                var tt = a[i + 8].toString();
+                document.getElementById(t).src = "pic/" + tt + ".png ";
+            }
+            var tt = a[8].toString();
+            document.getElementById("9").src = "pic/" + tt + ".png ";
+            setTimeout(function () { alert("丟出相同數字的牌") }, 500);
+            setTimeout(function () { gogo() }, 1000);
+
+        }
+        function gif() {
+            var k = o % 2;
+            document.getElementById("img").setAttribute("src", "../p/Hero" + k + ".png");
+            document.getElementById("img1").setAttribute("src", "../p/funny" + k + ".png");
+            o++;
+        }
+        function start() {
+            var button = document.getElementById("button");
+            button.addEventListener("click", no, false);
+            $("#dialogStart").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "clip",
+                width: "600px",
+                modal: true
+            });
+            var button = document.getElementById("btnStartClose");
+            button.addEventListener("click", go, false);
+            setInterval("gif()",500);
+        }
+        window.addEventListener("load", start, false);
+    </script>
+    <script>
+        $(function () {
+            //$("#btnOpen").bind("click", function (ev) {
+            //$("#dialog").dialog({
+            //    dialogClass: "dlg-no-close",
+            //    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+            //    show: "bounce"
+            //});
+            //});
+
+            $("#btnWinClose").bind("click", function (ev) {
+                $("#dialogWin").dialog("close");
+                location.href = "../story/8.html";
+            });
+            $("#btnLClose").bind("click", function (ev) {
+                $("#dialogL").dialog("close");
+                location.href = "../story/66.html";
+            });
+            $("#btnStartClose").bind("click", function (ev) {
+                $("#dialogStart").dialog("close");
+                //start();
+            });
+
+        });
+    </script>
+</head>
+<body id="table">
+    <input style="position:absolute;right:0px;bottom:0px;" id="button" type="button" value="通關鍵" />
+    <img src="pic/joker.png" width="130px">
+    <ol>
+        <li><img id="1" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="2" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="3" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="4" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="5" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="6" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="7" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="8" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="9" src="pic/blank.png" alt="blank image" width="145px"></li>
+
+    </ol>
+    <p id="boss"></p>
+    <br />
+
+    <ol>
+        <li><img id="11" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="22" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="33" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="44" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="55" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="66" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="77" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="88" src="pic/blank.png" alt="blank image" width="145px"></li>
+        <li><img id="99" src="" width="145px"></li>
+    </ol>
+    <img style="position:absolute;top:580px;left:1350px;" src="pic/Hero.png" width="130px">
+    <div id="dialogStart" title="遊戲說明" style="display: none; font-size: 32px;">
+        <p style="font-size:18px;text-align:center;">
+            遊戲開始後點選對方的一張牌<br />不要抽到鬼牌，最後鬼牌在誰手上誰就輸了
+            <br /><br />按開始按鈕開始遊戲
+        </p>
+        <div class="divcss">
+            <button id="btnStartClose" class="btn  btn3">開始</button>
+        </div>
+    </div>
+    <div id="dialogWin" title="恭喜成功!" style="display: none; font-size: 32px;text-align:center;">
+        <img style="width:50%;
+             height:40%;" id="img" src="../p/Hero0.png" alt="blank image">
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnWinClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+    <div id="dialogL" title="挑戰失敗!" style="display: none; font-size: 32px;text-align:center;">
+        <img style="width:50%;
+             height:40%;" id="img1" src="../p/funny0.png" alt="blank image">
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnLClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+</body>
+</html>

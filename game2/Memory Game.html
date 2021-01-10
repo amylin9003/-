@@ -1,0 +1,362 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Memory Game</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <style type="text/CSS">
+        li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        ul {
+            margin: 0;
+        }
+
+        .text {
+            font-size: 120%;
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", "TW Kai";
+            color: navy;
+        }
+
+        img {
+            position: relative;
+            width: 130px;
+            height: 140px;
+            left: 70px;
+        }
+
+        span {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 50px;
+            color: navy;
+        }
+
+        .counter {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 60px;
+            color: firebrick;
+        }
+
+        .message {
+            position: absolute;
+            left: 650px;
+        }
+
+        .dlg-no-close .ui-dialog-titlebar-close {
+            display: none;
+        }
+
+        .divcss {
+            /*width: 500px;*/
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 120px;
+            height: 60px;
+            display: inline-block;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            color: blue;
+            font-size: 18px;
+            line-height: 60px;
+            background-color: orange;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+
+        .btn3:hover {
+            background-color: navajowhite;
+            transition: all 0.5s;
+            color: rebeccapurple;
+            font-weight: bolder;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+
+        .ui-dialog .ui-dialog-titlebar {
+            padding: .2em .4em;
+        }
+
+        .ui-dialog-title {
+            font-size: 38px;
+            margin: 5px;
+            font-family: fantasy;
+            color: blue;
+            text-shadow: -4px 4px 6px khaki; /* add shadow */
+            -webkit-text-stroke: 1px lightgray; /* vendor prefix */
+            /* increasing the font size */
+        }
+    </style>
+  
+</head>
+
+<body>
+    <input style="position:absolute;right:0px;bottom:0px;" type="button" value="通關鍵" id="button">
+    <ol>
+        <li><img name="gra" id="00" src="cover.png" alt="blank image" onclick=check(0)></li>
+        <li><img name="gra" id="01" src="cover.png" alt="blank image" onclick=check(1)></li>
+        <li><img name="gra" id="02" src="cover.png" alt="blank image" onclick=check(2)></li>
+        <li><img name="gra" id="03" src="cover.png" alt="blank image" onclick=check(3)></li>
+        <li><img name="gra" id="04" src="cover.png" alt="blank image" onclick=check(4)></li>
+        <li><img name="gra" id="05" src="cover.png" alt="blank image" onclick=check(5)></li>
+        <li><img name="gra" id="06" src="cover.png" alt="blank image" onclick=check(6)></li>
+        <li><img name="gra" id="07" src="cover.png" alt="blank image" onclick=check(7)></li>
+        <li><img name="gra" id="08" src="cover.png" alt="blank image" onclick=check(8)></li>
+    </ol>
+    <ol>
+        <li><img name="gra" id="10" src="cover.png" alt="blank image" onclick=check(9)></li>
+        <li><img name="gra" id="11" src="cover.png" alt="blank image" onclick=check(10)></li>
+        <li><img name="gra" id="12" src="cover.png" alt="blank image" onclick=check(11)></li>
+        <li><img name="gra" id="13" src="cover.png" alt="blank image" onclick=check(12)></li>
+        <li><img name="gra" id="14" src="cover.png" alt="blank image" onclick=check(13)></li>
+        <li><img name="gra" id="15" src="cover.png" alt="blank image" onclick=check(14)></li>
+        <li><img name="gra" id="16" src="cover.png" alt="blank image" onclick=check(15)></li>
+        <li><img name="gra" id="17" src="cover.png" alt="blank image" onclick=check(16)></li>
+        <li><img name="gra" id="18" src="cover.png" alt="blank image" onclick=check(17)></li>
+    </ol>
+    <ol>
+        <li><img name="gra" id="20" src="cover.png" alt="blank image" onclick=check(18)></li>
+        <li><img name="gra" id="21" src="cover.png" alt="blank image" onclick=check(19)></li>
+        <li><img name="gra" id="22" src="cover.png" alt="blank image" onclick=check(20)></li>
+        <li><img name="gra" id="23" src="cover.png" alt="blank image" onclick=check(21)></li>
+        <li><img name="gra" id="24" src="cover.png" alt="blank image" onclick=check(22)></li>
+        <li><img name="gra" id="25" src="cover.png" alt="blank image" onclick=check(23)></li>
+        <li><img name="gra" id="26" src="cover.png" alt="blank image" onclick=check(24)></li>
+        <li><img name="gra" id="27" src="cover.png" alt="blank image" onclick=check(25)></li>
+        <li><img name="gra" id="28" src="cover.png" alt="blank image" onclick=check(26)></li>
+    </ol>
+    <ol>
+        <li><img name="gra" id="30" src="cover.png" alt="blank image" onclick=check(27)></li>
+        <li><img name="gra" id="31" src="cover.png" alt="blank image" onclick=check(28)></li>
+        <li><img name="gra" id="32" src="cover.png" alt="blank image" onclick=check(29)></li>
+        <li><img name="gra" id="33" src="cover.png" alt="blank image" onclick=check(30)></li>
+        <li><img name="gra" id="34" src="cover.png" alt="blank image" onclick=check(31)></li>
+        <li><img name="gra" id="35" src="cover.png" alt="blank image" onclick=check(32)></li>
+        <li><img name="gra" id="36" src="cover.png" alt="blank image" onclick=check(33)></li>
+        <li><img name="gra" id="37" src="cover.png" alt="blank image" onclick=check(34)></li>
+        <li><img name="gra" id="38" src="cover.png" alt="blank image" onclick=check(35)></li>
+    </ol>
+    <div id="img"></div>
+    <div class="message">
+        <span>剩下</span>
+        <span class="counter" id="counter">72</span>
+        <span>步</span>
+    </div>
+    <div id="dialogStart" title="遊戲說明" style="display: none; font-size: 32px;">
+        <p style="font-size:18px;text-align:center;">
+            遊戲開始後會有五秒鐘的記憶時間<br />找到相同的牌並翻出來即可消除，請在72步之內完成所有的配對<br />
+            <br /><br />按開始按鈕開始遊戲
+        </p>
+        <div class="divcss">
+            <button id="btnStartClose" class="btn  btn3">開始</button>
+        </div>
+    </div>
+
+    <div id="dialogWin" title="恭喜成功!" style="display: none; font-size: 32px;text-align:center;">
+        <div style="text-align:center;">
+            <img style="width:50%;height:40%;position:initial;" id="img2" src="../p/Hero0.png" alt="blank image" >
+        </div>
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnWinClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+    <div id="dialogL" title="挑戰失敗!" style="display: none; font-size: 32px;text-align:center;">
+        <img style="width:50%;
+             height:40%;" id="img1" src="../p/old0.png" alt="blank image">
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnLClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+    <script>
+        var d = ["0.png", "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png", "17.png", "18.png", "19.png", "20.png", "21.png", "22.png", "23.png", "24.png", "25.png", "26.png", "27.png", "28.png", "29.png", "30.png", "31.png", "32.png", "33.png", "34.png", "35.png", "36.png"];
+        var b = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+        var compare = new Array;
+        var outed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];//取走:1 未取:0
+        var opened = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];//打開:1 未開:0
+        var sec = 5;
+        var p = 0;
+        var second;//第二張牌
+        var cardfirst;//第一張牌
+        var k = 0;
+        var temp;
+        var counter = 0;
+        var o = 0;
+        function no() {
+            //document.write("恭喜獲勝!");
+            $("#dialogWin").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "bounce",
+                width: "500px",
+                modal: true
+            });
+        }
+        function hidepic()//時間到了,蓋牌
+        {
+            sec--;
+            if (sec == 0) {
+                for (var i = 0; i < 4; i++) {
+                    for (var j = 0; j < 9; j++) {
+                        var pic = document.getElementById(i.toString() + j.toString());
+                        pic.setAttribute("src", "cover.png");
+                    }
+                }
+            }
+            else {
+                setTimeout("hidepic()", 1000);
+            }
+        }
+        function gif() {
+            var k = o % 2;
+            document.getElementById("img2").setAttribute("src", "../p/Hero" + k + ".png");
+            document.getElementById("img1").setAttribute("src", "../p/old" + k + ".png");
+            o++;
+        }
+        function check(w) {
+            if (outed[w] == true || opened[w] == true)//如果已經取走或已經打開,不要做事
+                return;
+            document.gra[w].src = d[compare[w]];//翻開這張牌
+            counter++;
+            document.getElementById("counter").innerHTML = (72 - counter);
+            
+
+            if (second)//已經翻起兩張
+            {
+                second = false;
+                if (compare[w] % 18 == compare[cardfirst] % 18)//兩張牌相同
+                {
+                    setTimeout("k2(" + w + "," + cardfirst + ");", 1000);//呼叫副程式k2 停留1秒後取走
+                    p++;
+                    if (p == 18) {
+                        $("#dialogWin").dialog({
+                            dialogClass: "dlg-no-close",
+                            //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                            show: "bounce",
+                            width: "500px",
+                            modal: true
+                        });
+                    }
+                    outed[w] = 1;         //取走
+                    outed[cardfirst] = 1; //取走
+                }
+                else//兩張牌不同
+                {
+                    setTimeout("k1(" + w + "," + cardfirst + ");", 1000);//停留1秒後，蓋回兩張牌
+                    opened[w] = 0;            //w 是目前這一張
+                    opened[cardfirst] = 0;    //cardfirst為上一張
+                    cardfirst = -1;
+                }
+            }
+            else {//僅翻起第一張
+                second = true;
+                opened[w] = 1;
+                cardfirst = w;//將第一張牌的位置記起來
+            }
+        }
+        if (counter == 72&&p!=18) {
+                $("#dialogL").dialog({
+                    dialogClass: "dlg-no-close",
+                    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                    show: "shake",
+                    width: "500px",
+                    modal: true
+                });
+            }
+        function k2(w, cardfirst) {
+            document.gra[w].src = "blank.png";
+            document.gra[cardfirst].src = "blank.png";
+            return;
+        }
+
+        //蓋回去
+        function k1(w, cardfirst) {
+            document.gra[w].src = "cover.png";
+            document.gra[cardfirst].src = "cover.png";
+            return;
+        }
+        function start() {
+            for (var i = 0; i < 18; i++) {
+                var value = Math.floor(Math.random() * 18);
+                temp = b[i];
+                b[i] = b[value];
+                b[value] = temp;
+            }
+
+            //每張複製成兩張
+            for (var i = 0; i < 18; i++) {
+                compare[i * 2] = b[i];
+                compare[i * 2 + 1] = b[i];
+            }
+            //洗牌
+            for (var i = 0; i < 36; i++) {
+                value = Math.floor(Math.random() * 36);
+                temp = compare[i];
+                compare[i] = compare[value];
+                compare[value] = temp;
+            }
+
+            for (var i = 0; i < 4; i++) {
+                for (var j = 0; j < 9; j++) {
+                    var pic = document.getElementById(i.toString() + j.toString());
+                    pic.setAttribute("src", compare[k] + ".png");
+                    k++;
+                }
+            }
+            
+            hidepic();
+        }
+        function ss() {
+            var button = document.getElementById("button");
+            button.addEventListener("click", no, false);
+            var button = document.getElementById("btnStartClose");
+            button.addEventListener("click", start, false);
+            setInterval("gif()", 500);
+
+            $("#dialogStart").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "clip",
+                width: "600px",
+                modal: true
+            });
+        }
+        window.addEventListener("load", ss, false);
+    </script>
+    <script>
+        $(function () {
+            //$("#btnOpen").bind("click", function (ev) {
+            //$("#dialog").dialog({
+            //    dialogClass: "dlg-no-close",
+            //    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+            //    show: "bounce"
+            //});
+            //});
+
+            $("#btnWinClose").bind("click", function (ev) {
+                $("#dialogWin").dialog("close");
+                location.href = "../story/7.html";
+            });
+            $("#btnLClose").bind("click", function (ev) {
+                $("#dialogL").dialog("close");
+                location.href = "../story/55.html";
+            });
+            $("#btnStartClose").bind("click", function (ev) {
+                $("#dialogStart").dialog("close");
+                //start();
+            });
+
+        });
+    </script>
+</body>
+
+</html>
