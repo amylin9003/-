@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>猜拳連贏三局</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    <style type="text/CSS">
+        @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
+        div {
+            font-size: 70px;
+            font-family: Consolas;
+        }
+
+        li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        span.number {
+            color: dodgerblue;
+        }
+        
+            
+        .dlg-no-close .ui-dialog-titlebar-close {
+            display: none;
+        }
+
+        .divcss {
+            /*width: 500px;*/
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 120px;
+            height: 60px;
+            display: inline-block;
+           font-weight:bold;
+            position: relative;
+            overflow: hidden;
+            color: blue;
+            font-size: 18px;
+            line-height: 60px;
+            background-color: orange;
+            border-width: 0px;
+            border-bottom-style:none;
+        }
+
+        .btn3:hover {
+
+            background-color:navajowhite;
+            transition: all 0.5s;
+            color:rebeccapurple ;
+            
+            font-weight: bolder;
+            border-width: 0px;
+            border-bottom-style: none;
+        }
+        .ui-dialog .ui-dialog-titlebar {
+            padding:.2em .4em;
+        }
+        
+        .ui-dialog-title{
+            font-size: 38px;
+            margin:5px;
+            font-family:fantasy;             
+             color:blue;
+             text-shadow: -4px 4px 6px khaki; /* add shadow */
+             -webkit-text-stroke: 1px lightgray; /* vendor prefix */
+             /* increasing the font size */
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <input style="position:absolute;right:0px;bottom:0px;" type="button" value="通關鍵" id="button">
+    <img id="p" src="" width="300px">
+    <h1 style="position:absolute;top:80px;left:360px;" id="pp"></h1>
+    <img style="position:absolute;top:38px;left:500px;" id="ppp" width="200px" src="">
+    <img style="position:absolute;top:250px;left:300px;" id="pppp" width="250px" src="">
+    <img style="position:absolute;top:320px;left:780px;" id="pppppp" width="300px" src="">
+    <div style="position:absolute;top:10px;left:750px;">
+        <span id="ppppp"></span>
+        <span id="sss" style="color:red;font-weight:bold;font-size: 70px;"></span>
+    </div>
+    <ol style="position:absolute;top:470px;left:55px;" id="i">
+        <li><img id="0" src="" width="200px"></li>
+        <li><img id="1" src="" width="200px"></li>
+        <li><img id="2" src="" width="200px"></li>
+    </ol>
+
+    <div id="dialogStart" title="遊戲說明" style="display: none; font-size: 32px;">
+        <p style="font-size:18px;text-align:center;">
+            請點選剪刀、石頭或布進行遊戲<br />上方的圖示為對方可能會出的拳型，但不表示一定會出<br />請猜出她會出什麼並打敗她。<br />連贏三次即可過關
+            若輸了，次數會歸零重新開始
+            <br /><br />按開始按鈕開始遊戲
+        </p>
+        <div class="divcss">
+            <button id="btnStartClose" class="btn  btn3">開始</button>
+        </div>
+    </div>
+
+    <div id="dialogWin" title="恭喜成功!" style="display: none; font-size: 32px;text-align:center;">
+        <img style="width:50%;
+             height:40%;" id="img" src="../p/Hero0.png" alt="blank image">
+        <p style="font-size:18px;text-align:center;">請按確定按鈕繼續</p>
+        <div class="divcss">
+            <button id="btnWinClose" class="btn  btn3">確定</button>
+        </div>
+    </div>
+
+
+    <script>
+        var o = 0;
+        function no() {
+            //document.write("恭喜獲勝!");
+                            $("#dialogWin").dialog({
+                                dialogClass: "dlg-no-close",
+                                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                                show: "bounce",
+                                width: "500px",
+                                modal: true
+                            });
+        }
+        function mouseOver(e) {
+            if (e.target.tagName.toLowerCase() == "li") {
+                e.target.setAttribute("width", "300px");
+            }
+        }
+        function start() {
+            //setTimeout(function () { alert("請點剪刀、石頭或布"); }, 500);
+            //document.getElementById("button").setAttribute("style", "display : none;");
+            document.getElementById("p").setAttribute("src", "pic/b.png");
+            document.getElementById("pppppp").setAttribute("src", "pic/Hero.png");
+            document.getElementById("pp").innerHTML = "我會出";
+            var a = Math.floor(Math.random() * 3).toString();
+            document.getElementById("ppp").setAttribute("src", "pic/" + a + ".png");
+            document.getElementById("pppp").setAttribute("src", "pic/3.png");
+            document.getElementById("ppppp").innerHTML = "累積獲勝次數:";
+            if (localStorage.key(1000)) document.getElementById("sss").innerHTML = localStorage.getItem(1000);
+            else {
+                localStorage.setItem(1000, 0);
+                document.getElementById("sss").innerHTML = localStorage.getItem(1000);
+            }
+            document.getElementById("0").setAttribute("src", "pic/0.png");
+            document.getElementById("1").setAttribute("src", "pic/1.png");
+            document.getElementById("2").setAttribute("src", "pic/2.png");
+            document.getElementById("i").addEventListener("mouseup", MouseClick, false);
+            document.getElementById("i").addEventListener("mouseover", mouseOver, false);
+            document.getElementById("i").addEventListener("mouseout", mouseOut, false);
+            setInterval("gif()",500);
+        }
+        function gif()
+        {
+            var k = o % 2;
+            document.getElementById("img").setAttribute("src","../p/Hero" + k +".png");
+            o++;
+        }
+        function mouseOver(e) {
+            e.target.setAttribute("width", "300px");
+        }
+        function mouseOut(e) {
+            e.target.setAttribute("width", "200px");
+        }
+        function MouseClick(e) {
+            if (e.target.id <= 2) {
+                var a = Math.floor(Math.random() * 3);
+                var b = a.toString();
+                document.getElementById("pppp").setAttribute("src", "pic/" + b + ".png");
+                setTimeout(function () {
+                    if ((a == 0 && e.target.id == 1) || (a == 1 && e.target.id == 2) || (a == 2 && e.target.id == 0)) {
+                    //if (1 == 1) {  //
+                        if (parseInt(localStorage.getItem(1000)) == 2) {  //
+                            //document.write("恭喜獲勝!");
+                            $("#dialogWin").dialog({
+                                dialogClass: "dlg-no-close",
+                                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                                show: "bounce",
+                                width: "500px",
+                                modal: true
+                            });
+                        }
+                        localStorage.setItem(1000, parseInt(localStorage.getItem(1000)) + 1);
+                        document.getElementById("sss").innerHTML = localStorage.getItem(1000);
+                        alert("哼，不會再讓你猜到的!");
+                    }
+                    else if ((a == 0 && e.target.id == 2) || (a == 1 && e.target.id == 0) || (a == 2 && e.target.id == 1)) {
+                        localStorage.setItem(1000, 0);
+                        document.getElementById("sss").innerHTML = localStorage.getItem(1000);
+                        alert("哈哈被我影響了吧!");
+                    }
+                    else alert("啊!平手")
+                    document.getElementById("pppp").setAttribute("src", "pic/3.png");
+                    b = Math.floor(Math.random() * 3).toString();
+                    document.getElementById("ppp").setAttribute("src", "pic/" + b + ".png");
+                }, 400);
+            }
+            else alert("請點剪刀、石頭或布");
+        }
+        function ss() {
+            var button = document.getElementById("button");
+            button.addEventListener("click", no, false);
+            start();
+            $("#dialogStart").dialog({
+                dialogClass: "dlg-no-close",
+                //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+                show: "clip",
+                width: "600px",
+                modal: true
+            });
+
+        }
+        window.addEventListener("load", ss, false);
+    </script>
+
+    <script>
+        $(function () {
+            //$("#btnOpen").bind("click", function (ev) {
+            //$("#dialog").dialog({
+            //    dialogClass: "dlg-no-close",
+            //    //blind, bounce, clip, drop, explode, fade, fold, highlight, pulsate, puff, slide, scale, size, shake, transfer
+            //    show: "bounce"
+            //});
+            //});
+
+            $("#btnWinClose").bind("click", function (ev) {
+                $("#dialogWin").dialog("close");
+                location.href = "../story/6.html";
+            });
+
+            $("#btnStartClose").bind("click", function (ev) {
+                $("#dialogStart").dialog("close");
+                //start();
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
