@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>cover</title>
+    <style type="text/CSS">
+        img {position:relative;
+             width:29%;
+             height:29%;
+			 top:10px;
+             left:450px;}
+        button{position:relative;
+				top:10px;
+               left:430px;}
+        h4    {position:relative;
+				top:10px;
+               left:350px;
+               font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+               color:gray;
+               font-weight: bold;}
+    </style>
+</head>
+
+<body style="overflow:hidden;">
+    <img id = "pic" src = "pic/封面.jpg" alt = "封面">
+    <div class="container">
+        <h4>歡迎進入"勇闖魔城"繪本</h4>
+        <h4>是否願意接受挑戰?</h4>
+        <button type="button" class="btn btn-primary" id = "button1" onclick="location.href='1.html'">
+          Yes <span class="badge badge-light"></span>
+        </button>
+        <button type="button" class="btn btn-danger" id = "button2" onclick="location.href='1.html'">
+          No <span class="badge badge-light"></span>
+        </button>
+</body>
+
+</html>

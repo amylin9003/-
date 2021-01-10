@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Story4</title>
+    <style type="text/css">
+       .background_image {
+            position: absolute;
+            top: 20px;
+            left: 110px;
+            width: 1300px;
+            height: 700px;
+            z-index: 1;
+        }
+
+        .pic_image {
+            position: absolute;
+            top: 620px;
+            left: 420px;
+            width: 30px;
+            height: 40px;
+            z-index: 2;
+        }
+        .pic_image0{
+            position: absolute;
+            top: 620px;
+            left: 1050px;
+            width: 30px;
+            height: 40px;
+            z-index: 2;
+        }
+        .pic_image2 {
+            position: absolute;
+            top: 85px;
+            left: 880px;
+            width: 360px;
+            z-index: 2;
+        }
+        .pic_image3 {
+            
+            position: absolute;
+            top: 340px;
+            left: 1378px;
+            z-index: 3;
+            width: 80px;
+        }
+            .pic_image3:hover {
+                width: 120px;
+                top: 320px;
+            }
+        .pic_image4 {
+            
+            position: absolute;
+            top: 340px;
+            left: 62px;
+            z-index: 3;
+            width: 80px;
+        }
+            .pic_image4:hover {
+                width: 120px;
+                top: 320px;
+                left: 22px;
+            }
+        .w {
+            position: absolute;
+            top: 80px;
+            left: 150px;
+            z-index: 3;
+            font-family: tahoma, geneva, sans-serif;
+            color: white
+        }
+
+        .ml3 {
+            position: absolute;
+            top: 100px;
+            left: 220px;
+            font-weight: 900;
+            font-size: 23px;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script>
+        var n = 4;
+        var c = 5;
+        var d;
+        var t = [];
+        var a = ["前往巨龍的魔城距離十分遙遠，且路上危機重重，", " 一下是斷垣殘壁，一下是滾燙岩漿，", "雖然艱難辛苦，但是勇者憑著堅定的意志咬牙前進，", "為了能夠拯救整個王國和公主，", " 勇者把超過一個月的路程縮短成十天。"];
+        function start() {
+            document.getElementById("nnnn").setAttribute("src", "pic/0" + n + ".jpg");
+            var textWrapper = document.querySelector('.ml3');
+            for (let i = 0; i < c; i++) {
+                textWrapper.innerHTML = a[i];
+                //textWrapper.forEach(el => {
+                //    el.innerHTML = el.innerText.split("").map(l => l === "\n" ? '<br/>' : '<span>${l}</span>').join("")
+                //});
+                t += textWrapper.innerHTML.replace(/\S/g, "<span class='letter'>$&</span>") + "<br/><br/>";
+                textWrapper.innerHTML = t;
+            }
+            anime.timeline({ loop: true })
+                .add({
+                    targets: '.ml3 .letter',
+                    opacity: [0, 1],
+                    easing: "easeInOutQuad",
+                    duration: 2250,
+                    delay: (el, i) => 150 * (i + 1)
+                }).add({
+                    targets: '.ml3',
+                    opacity: 0,
+                    duration: 1000,
+                    easing: "easeOutExpo",
+                    delay: 1000
+                });
+        }
+        window.addEventListener("load", start, false);
+    </script>
+    <p class="ml3"></p>
+    
+        <img src="pic/back.jpg" class="background_image"
+             alt="First positioned image" />
+        <img id="nnn" src="pic/7.png" class="pic_image" />
+        <img id="nnn0" src="pic/8.png" class="pic_image0" />
+        <img id="nnnn" src="" class="pic_image2" />
+        <a href="5.html">
+            <img src="pic/f.png" class="pic_image3" />
+        </a>
+        <a href="3.html">
+            <img src="pic/ff.png" class="pic_image4" />
+        </a>
+    
+</body>
+</html>
+

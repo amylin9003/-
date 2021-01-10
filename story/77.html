@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Story5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .background_image {
+            position: absolute;
+            top: 20px;
+            left: 110px;
+            width: 1300px;
+            height: 700px;
+            z-index: 1;
+        }
+
+        .pic_image {
+            position: absolute;
+            top: 620px;
+            left: 410px;
+            width: 30px;
+            height: 40px;
+            z-index: 2;
+        }
+
+        .pic_imagee {
+            position: absolute;
+            top: 620px;
+            left: 430px;
+            width: 30px;
+            height: 40px;
+            z-index: 2;
+        }
+
+        .pic_image0 {
+            position: absolute;
+            top: 620px;
+            left: 1030px;
+            width: 30px;
+            height: 40px;
+            z-index: 2;
+        }
+
+        .pic_image00 {
+            position: absolute;
+            top: 620px;
+            left: 1050px;
+            width: 30px;
+            height: 40px;
+            z-index: 2;
+        }
+
+        .pic_image2 {
+            position: absolute;
+            top: 85px;
+            left: 880px;
+            width: 360px;
+            z-index: 2;
+        }
+
+        .pic_image3 {
+            position: absolute;
+            top: 530px;
+            left: 360px;
+            z-index: 3;
+            width: 160px;
+        }
+
+            .pic_image3:hover {
+                width: 180px;
+                top: 525px;
+                left: 350px;
+            }
+
+        .pic_image4 {
+            position: absolute;
+            top: 340px;
+            left: 62px;
+            z-index: 3;
+            width: 80px;
+        }
+
+            .pic_image4:hover {
+                width: 120px;
+                top: 320px;
+                left: 22px;
+            }
+
+        .w {
+            position: absolute;
+            top: 80px;
+            left: 150px;
+            z-index: 3;
+            font-family: tahoma, geneva, sans-serif;
+            color: white
+        }
+
+        .ml3 {
+            position: absolute;
+            top: 100px;
+            left: 220px;
+            font-weight: 900;
+            font-size: 23px;
+            z-index: 3;
+            font-family: 'Times New Roman';
+            line-height: 1.2;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script>
+        var n = 7;
+        var c =3;
+        var d;
+        var t = [];
+        var a = ["要挑戰過國王的遊戲沒有這麼容易，","勇者又被趕下樓，必需要再贏過一次小丑，","才能再次上樓，勇者這次會成功嗎?"];
+        function start() {
+            document.getElementById("nnnn").setAttribute("src", "pic/0" + n + ".jpg");
+            var textWrapper = document.querySelector('.ml3');
+            for (let i = 0; i < c; i++) {
+                textWrapper.innerHTML = a[i];
+                //textWrapper.forEach(el => {
+                //    el.innerHTML = el.innerText.split("").map(l => l === "\n" ? '<br/>' : '<span>${l}</span>').join("")
+                //});
+                t += textWrapper.innerHTML.replace(/\S/g, "<span class='letter'>$&</span>") + "<br/><br/>";
+                textWrapper.innerHTML = t;
+            }
+            anime.timeline({ loop: true })
+                .add({
+                    targets: '.ml3 .letter',
+                    opacity: [0, 1],
+                    easing: "easeInOutQuad",
+                    duration: 2250,
+                    delay: (el, i) => 150 * (i + 1)
+                }).add({
+                    targets: '.ml3',
+                    opacity: 0,
+                    duration: 1000,
+                    easing: "easeOutExpo",
+                    delay: 1000
+                });
+        }
+        window.addEventListener("load", start, false);
+    </script>
+    <p style="margin-top:1em;" class="ml3"></p>
+    <p>
+        <img src="pic/back.jpg" class="background_image"
+             alt="First positioned image" />
+        <img id="nnn" src="pic/1.png" class="pic_image" />
+        <img id="nnn" src="pic/3.png" class="pic_imagee" />
+        <img id="nnn0" src="pic/1.png" class="pic_image0" />
+        <img id="nnn0" src="pic/4.png" class="pic_image00" />
+        <img id="nnnn" src="" class="pic_image2" />
+        <a href="6.html">
+            <img src="pic/ff.png" class="pic_image4" />
+        </a>
+        <a href="../game3/抽鬼牌.html">
+            <img src="pic/挑戰.png" class="pic_image3" />
+        </a>
+    </p>
+    <div class="container">
+        <button style="position: absolute;
+            top:550px;
+            left: 608px;
+            width:100px;
+            font-size:16px;
+            z-index: 10;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            遊戲說明
+        </button>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">遊戲說明:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        規則介紹:<br /> &emsp;&emsp;遊戲開始後點選對方的一張牌，不要抽到鬼牌。<br />&emsp;&emsp;最後鬼牌在誰手上誰就輸了。<br />
+                        <br />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
