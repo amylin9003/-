@@ -1,4 +1,7 @@
-[
+<!DOCTYPE html>
+<html>
+<body>
+<p>[
   {
     "MMSI": "416072000", 
     "coords": [
@@ -44,3 +47,7 @@
     "time": "2022-10-03T11:39:10"
   },
 ]
+	
+</p>
+</body>
+</html>
